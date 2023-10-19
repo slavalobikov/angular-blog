@@ -1,1 +1,32 @@
-<p>login-page works!</p>
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Login</h2>
+
+  <div class="alert alert-danger" *ngIf="error">
+    {{error}}
+  </div>
+  <div
+    [ngClass]="{invalid: form.get('email')?.touched && form.get('email')?.invalid}"
+    class="form-control">
+    <label for="email">Email</label>
+    <input (input)="clearError()" autocomplete="username" id="email" type="email" formControlName="email">
+    <div
+      *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+      class="validation">
+      <small *ngIf="form.get('email')?.errors?.['required']">This field is required</small>
+    </div>
+  </div>
+  <div
+    class="form-control">
+    <label for="password">Password</label>
+    <input (input)="clearError()"
+      [ngClass]="{invalid: form.get('password')?.touched && form.get('password')?.invalid}"
+      autocomplete="current-password"
+      id="password" type="password"
+      formControlName="password"
+    >
+    <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="validation">
+      <small *ngIf="form.get('password')?.errors?.['required']">This field is required</small>
+    </div>
+  </div>
+  <button [disabled]="form.invalid || isSubmitted" type="submit" class="btn btn-primary">Login</button>
+</form>
